@@ -1,8 +1,16 @@
+# Nicholas McLendon
+# CNE 340 Fall 2023
+# This script creates a table in the jobhunter database on my WAMP server and updates it every 4 hours with new job postings from remotive.com
+# The script connects to the database on my WAMP server and creates the jobs table if it does not already exist in the jobhunter database.
+# Next it uses remotive's API to extract data from the jobs page and saves the data in the jobs table on my database.
+# This script does not produce duplicates when it runs, it first check to make sure the current job it's looking at isn't already in the table before adding it.
+# I was unable to complete the function that deletes jobs published more than 14 days ago.
+
 import mysql.connector
 import time
 import json
 import requests
-from datetime import datetime, timedelta
+import datetime
 import html2text
 
 
@@ -102,12 +110,12 @@ def add_or_delete_job(jobpage, cursor):
             notify_user(jobdetails)
 
     # Queries to make sure I can pull any data I might need from the database
-    cursor.execute("SELECT * FROM jobs WHERE title LIKE '%Engineer%'")
-    full_stack = cursor.fetchall()
-    print(full_stack)
-    cursor.execute("SELECT * FROM jobs WHERE Created_at = '2023-11-07'")
-    specific_date = cursor.fetchall()
-    print(specific_date)
+#    cursor.execute("SELECT * FROM jobs WHERE title LIKE '%Engineer%'")
+#    full_stack = cursor.fetchall()
+#    print(full_stack)
+#    cursor.execute("SELECT * FROM jobs WHERE Created_at = '2023-11-07'")
+#    specific_date = cursor.fetchall()
+#    print(specific_date)
 
 # Setup portion of the program. Take arguments and set up the script
 # You should not need to edit anything here.
